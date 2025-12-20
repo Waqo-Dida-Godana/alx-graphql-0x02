@@ -14,9 +14,7 @@
     "graphql": "^16.12.0",
     "next": "15.1.3",
     "react": "^18",
-    "react-dom": "^18",
-    "@sentry/react": "^7.70.0",
-    "@sentry/nextjs": "^7.70.0"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@types/node": "^20",
