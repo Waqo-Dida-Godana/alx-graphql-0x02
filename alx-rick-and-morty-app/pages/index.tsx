@@ -3,9 +3,12 @@ import { GET_EPISODES } from "@/graphql/queries"
 import { EpisodeProps } from "@/interfaces"
 import EpisodeCard from "@/components/common/EpisodeCard"
 import { useEffect, useState } from "react"
+import ErrorBoundary from '@/components/ErrorBoundary'
+import ErrorProneComponent from '@/components/ErrorProneComponent'
 
 const Home: React.FC = () => {
   const [page, setPage] = useState<number>(1)
+  const [triggerError, setTriggerError] = useState<boolean>(false)
   const { loading, error, data, refetch } = useQuery(GET_EPISODES, {
     variables: { page: page }
   })
@@ -30,6 +33,22 @@ const Home: React.FC = () => {
 
       {/* Main Content */}
       <main className="flex-grow p-6">
+        <div className="mb-6">
+          <button
+            onClick={() => setTriggerError(true)}
+            className="bg-red-500 text-white font-semibold py-2 px-4 rounded mr-4"
+          >
+            Trigger Error
+          </button>
+          <span className="text-sm text-gray-700">(Use this to test ErrorBoundary)</span>
+        </div>
+
+        {triggerError && (
+          <ErrorBoundary>
+            <ErrorProneComponent />
+          </ErrorBoundary>
+        )}
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {results && results.map(({ id, name, air_date, episode }: EpisodeProps, key: number) => (
             <EpisodeCard
